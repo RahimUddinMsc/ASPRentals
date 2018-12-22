@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AspRentals.Models.Customer>
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+@if (!Model.Any())
+{
+    <p>No Customers</p>
+}
+else
+{ 
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Customer</th>
+        </tr>
+        @foreach (var cust in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(cust.Name, "Detail", "Customer",new { Id = cust.Id},null)</td>
+            </tr>
+        }
+
+    </table>
+
+}
+
+
+
+
+
+
+

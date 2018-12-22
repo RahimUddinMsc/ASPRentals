@@ -1,9 +1,29 @@
-﻿@model AspRentals.Models.Movie
+﻿@model AspRentals.ViewModel.RandomMovieViewModel
 
 @{
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>And the name of the film is: @Model.name</h2>
+@{
+    var custom = Model.Customers.Count > 5 ? "customise" : null;
+}
+
+<h2 class="@custom">And the name of the film is: @Model.Movie.name</h2>
+
+@if (@Model.Customers.Count == 2)
+{
+    <h2>two customers</h2>
+}
+else
+{
+    <ul>
+        @foreach (var customer in Model.Customers)
+        {
+            <li>@customer.name</li>
+        }
+    </ul>
+}
+
+
 
