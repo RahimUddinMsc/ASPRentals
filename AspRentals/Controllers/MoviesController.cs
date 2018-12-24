@@ -25,7 +25,7 @@ namespace AspRentals.Controllers
                 new Movie { id = 2, name = "Wall-e" }
             };
         }
-
+        
         public ActionResult Random()
         {
             var movie = new Movie() {name = "Shredder" };
