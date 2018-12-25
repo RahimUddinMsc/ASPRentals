@@ -5,25 +5,39 @@ using System.Web;
 using System.Web.Mvc;
 using AspRentals.Models;
 using AspRentals.ViewModel;
+using System.Data.Entity;
 
 namespace AspRentals.Controllers
 {
     public class MoviesController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }                
+
         // GET: Movies
         public ActionResult Index()
         {
-            var movies = GetMovies();
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
             return View(movies);
         }
 
-        private IEnumerable<Movie> GetMovies()
+        public ActionResult Detail(int id)
         {
-            return new List<Movie>
-            {
-                new Movie { id = 1, name = "Shrek" },
-                new Movie { id = 2, name = "Wall-e" }
-            };
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
         }
         
         public ActionResult Random()

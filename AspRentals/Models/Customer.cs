@@ -12,6 +12,7 @@ namespace AspRentals.Models
         [Required]
         [StringLength(255)]
         public String Name { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public Boolean IsSuscribeToNewsLetter { get; set; }
         public MembershipType MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }
