@@ -233,6 +233,26 @@
     <Compile Include="Migrations\201812251941538_PopulateGenreTable.Designer.cs">
       <DependentUpon>201812251941538_PopulateGenreTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812262017254_AnnotationsAddedToCustomers.cs" />
+    <Compile Include="Migrations\201812262017254_AnnotationsAddedToCustomers.Designer.cs">
+      <DependentUpon>201812262017254_AnnotationsAddedToCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812262054001_RequiredRemovedFromMovie.cs" />
+    <Compile Include="Migrations\201812262054001_RequiredRemovedFromMovie.Designer.cs">
+      <DependentUpon>201812262054001_RequiredRemovedFromMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812262059372_RequiredRemovedFromMovie1.cs" />
+    <Compile Include="Migrations\201812262059372_RequiredRemovedFromMovie1.Designer.cs">
+      <DependentUpon>201812262059372_RequiredRemovedFromMovie1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812262101530_RequiredRemovedFromMovieWithAnnotation.cs" />
+    <Compile Include="Migrations\201812262101530_RequiredRemovedFromMovieWithAnnotation.Designer.cs">
+      <DependentUpon>201812262101530_RequiredRemovedFromMovieWithAnnotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812262103221_RequiredRemovedFromMovieWithAnnotation1.cs" />
+    <Compile Include="Migrations\201812262103221_RequiredRemovedFromMovieWithAnnotation1.Designer.cs">
+      <DependentUpon>201812262103221_RequiredRemovedFromMovieWithAnnotation1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -243,6 +263,8 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\ManageMovieViewModel.cs" />
+    <Compile Include="ViewModel\NewCustomerViewModel.cs" />
     <Compile Include="ViewModel\RandomMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +330,8 @@
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Movies\Index.cshtml" />
     <Content Include="Views\Movies\Detail.cshtml" />
+    <Content Include="Views\Customer\New.cshtml" />
+    <Content Include="Views\Movies\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,6 +388,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812251941538_PopulateGenreTable.resx">
       <DependentUpon>201812251941538_PopulateGenreTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812262017254_AnnotationsAddedToCustomers.resx">
+      <DependentUpon>201812262017254_AnnotationsAddedToCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812262054001_RequiredRemovedFromMovie.resx">
+      <DependentUpon>201812262054001_RequiredRemovedFromMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812262059372_RequiredRemovedFromMovie1.resx">
+      <DependentUpon>201812262059372_RequiredRemovedFromMovie1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812262101530_RequiredRemovedFromMovieWithAnnotation.resx">
+      <DependentUpon>201812262101530_RequiredRemovedFromMovieWithAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812262103221_RequiredRemovedFromMovieWithAnnotation1.resx">
+      <DependentUpon>201812262103221_RequiredRemovedFromMovieWithAnnotation1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

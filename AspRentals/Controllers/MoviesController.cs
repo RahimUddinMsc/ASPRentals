@@ -62,25 +62,56 @@ namespace AspRentals.Controllers
             //return RedirectToAction("Index", "Home", new {page = 1, sortBy = "name" });
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult New()
         {
-            return Content("id=" + id);
-            //return RedirectToAction("Index", "Movies", new { pageIndex = 122, sortBy = "carlz" });
+            var viewModel = new ManageMovieViewModel
+            {
+                Genres = _context.Genres.ToList()
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if(movie.id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.id == movie.id);
+                movieInDb.name = movie.name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.Genre = movie.Genre;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                
+            };
+                
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Movies");
         }
         
-       
-        /*
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ActionResult Edit(int id)
         {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
+            var movie = _context.Movies.SingleOrDefault(m => m.id == id);
 
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "name";
+            if (movie == null)
+                return HttpNotFound();
 
-            return Content(String.Format("page index = {0}, sort by = {1}",pageIndex, sortBy));                            
+            var viewModel = new ManageMovieViewModel
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+
+            return View("New", viewModel);
+
         }
-        */
+        
+
 
         [Route("movies/release/{year}/{month:regex(\\d{2}):range(1,12)}")]
         public ActionResult ByRelease(int year, int month)
@@ -93,5 +124,20 @@ namespace AspRentals.Controllers
         {
             return Content("got this thing" + year + "/" + month);
         }
+
+
+
+        /*
+        public ActionResult Index(int? pageIndex, string sortBy)
+        {
+            if (!pageIndex.HasValue)
+                pageIndex = 1;
+
+            if (String.IsNullOrWhiteSpace(sortBy))
+                sortBy = "name";
+
+            return Content(String.Format("page index = {0}, sort by = {1}",pageIndex, sortBy));                            
+        }
+        */
     }
 }
