@@ -58,11 +58,11 @@ namespace AspRentals
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1059442914886-b15tn3gosmh82dsmnbl3hranr2cufjoe.apps.googleusercontent.com",
+                ClientSecret = "SJjZKYQJn5Ye_X_AvBJi-_gh"
+            });
         }
     }
 }

@@ -9,6 +9,7 @@ using AspRentals.ViewModel;
 
 namespace AspRentals.Controllers
 {
+
     public class CustomerController : Controller
     {
         
@@ -23,12 +24,13 @@ namespace AspRentals.Controllers
         {
             _context.Dispose();
         }   
-
-        // GET: Customer
+                
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();           
-            return View(customers); 
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View();
+
+            return View("readOnly"); 
         }
 
         public ActionResult Detail (int Id)
@@ -40,21 +42,33 @@ namespace AspRentals.Controllers
             }
             
             return View(customer);
-        }   
-        
+        } 
+            
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new NewCustomerViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
             return View(viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viemModel = new NewCustomerViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                return View("New", viemModel);
+            }
 
             if (customer.Id == 0)
             {

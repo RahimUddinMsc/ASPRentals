@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace AspRentals.Controllers
 {
+
     public class MoviesController : Controller
     {
         private ApplicationDbContext _context;
@@ -21,13 +22,15 @@ namespace AspRentals.Controllers
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
-        }                
+        }
 
-        // GET: Movies
+        // GET: Movies        
         public ActionResult Index()
         {
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
-            return View(movies);
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View();
+
+            return View("readOnly");
         }
 
         public ActionResult Detail(int id)
@@ -62,18 +65,32 @@ namespace AspRentals.Controllers
             //return RedirectToAction("Index", "Home", new {page = 1, sortBy = "name" });
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
-            var viewModel = new ManageMovieViewModel
-            {
+            var viewModel = new ManageMovieViewModel()
+            {                   
                 Genres = _context.Genres.ToList()
             };
             return View(viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
+
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ManageMovieViewModel(movie)
+                {           
+                    Genres = _context.Genres.ToList()
+                };
+
+                return View("New", viewModel);
+            }
+
             if(movie.id == 0)
             {
                 movie.DateAdded = DateTime.Now;
@@ -93,7 +110,8 @@ namespace AspRentals.Controllers
 
             return RedirectToAction("Index","Movies");
         }
-        
+
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.id == id);
@@ -101,17 +119,14 @@ namespace AspRentals.Controllers
             if (movie == null)
                 return HttpNotFound();
 
-            var viewModel = new ManageMovieViewModel
+            var viewModel = new ManageMovieViewModel(movie)
             {
-                Movie = movie,
                 Genres = _context.Genres.ToList()
             };
 
             return View("New", viewModel);
 
-        }
-        
-
+        }        
 
         [Route("movies/release/{year}/{month:regex(\\d{2}):range(1,12)}")]
         public ActionResult ByRelease(int year, int month)
